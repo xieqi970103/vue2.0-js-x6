@@ -16,6 +16,7 @@ import "@antv/x6-vue-shape";
 import { Graph } from "@antv/x6";
 export default {
   name: "X6",
+  components: {},
   data() {
     return {
       graph: null,
@@ -30,7 +31,7 @@ export default {
       const that = this;
       that.graph = new Graph({
         container: document.getElementById("drag-container"), // 设置画布的容器
-        // width： 1600 // 默认使用容器的宽高
+        // width: 1600, // 默认使用容器的宽高
         // height：900
         // 网格
         grid: {
@@ -64,8 +65,10 @@ export default {
 .panel {
   .panel-content-wrapper {
     height: 100%;
+    display: flex;
     .content-wrapper {
       height: 100%;
+      width: 100%;
       .draw-wrapper {
         height: 100%;
       }
