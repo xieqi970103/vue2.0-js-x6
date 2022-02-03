@@ -17,7 +17,9 @@ import "@antv/x6-vue-shape";
 import { Graph } from "@antv/x6";
 import NodeBar from "./components/NodeBar";
 import registerNode from "./shape/registerNode";
+import registerEdge from "./edge/registerEdge";
 registerNode(Graph); // 调用注册自定义节点方法
+registerEdge(Graph); // 调用注册边方法
 export default {
   name: "X6",
   components: {
