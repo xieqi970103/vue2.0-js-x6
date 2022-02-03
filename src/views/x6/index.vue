@@ -2,6 +2,7 @@
   <a-card class="panel">
     <div class="panel-content-wrapper">
       <!-- 左侧节点选择区 -->
+      <node-bar></node-bar>
       <!-- 中部内容区 -->
       <div class="content-wrapper">
         <div class="draw-wrapper" id="drag-container"></div>
@@ -14,12 +15,22 @@
 <script>
 import "@antv/x6-vue-shape";
 import { Graph } from "@antv/x6";
+import NodeBar from "./components/NodeBar";
+import registerNode from "./shape/registerNode";
+registerNode(Graph); // 调用注册自定义节点方法
 export default {
   name: "X6",
-  components: {},
+  components: {
+    NodeBar,
+  },
   data() {
     return {
       graph: null,
+    };
+  },
+  provide() {
+    return {
+      getGraph: () => this.graph,
     };
   },
   mounted() {
@@ -32,7 +43,10 @@ export default {
       that.graph = new Graph({
         container: document.getElementById("drag-container"), // 设置画布的容器
         // width: 1600, // 默认使用容器的宽高
-        // height：900
+        // height：900,
+        translating: {
+          restrict: true, // 节点不能超出画布范围
+        },
         // 网格
         grid: {
           size: 10, // 网格大小 10px
