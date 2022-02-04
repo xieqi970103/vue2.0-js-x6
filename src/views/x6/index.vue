@@ -18,6 +18,7 @@ import { Graph } from "@antv/x6";
 import NodeBar from "./components/NodeBar";
 import registerNode from "./shape/registerNode";
 import registerEdge from "./edge/registerEdge";
+import cellHover from "./composables/cellHover";
 registerNode(Graph); // 调用注册自定义节点方法
 registerEdge(Graph); // 调用注册边方法
 export default {
@@ -67,6 +68,8 @@ export default {
           visible: true, // 渲染网格背景
         },
       });
+      // 移入节点效果
+      cellHover(this.graph);
     },
   },
 };

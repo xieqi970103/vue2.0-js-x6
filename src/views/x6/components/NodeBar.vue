@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: xxqq
  * @Date: 2022-02-03 17:24:51
- * @LastEditTime: 2022-02-03 21:52:28
+ * @LastEditTime: 2022-02-04 17:04:19
  * @LastEditors: xxqq
 -->
 <template>
@@ -15,6 +15,7 @@
 </template>
 <script>
 import { Addon } from "@antv/x6";
+import ports from "../shape/ports";
 const { Dnd } = Addon;
 export default {
   name: "NodeBar",
@@ -64,6 +65,7 @@ export default {
               },
             },
           },
+          ports,
         });
       }
       this.dnd.start(node, e);
