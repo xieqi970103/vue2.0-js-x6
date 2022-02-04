@@ -14,7 +14,7 @@
 
 <script>
 import "@antv/x6-vue-shape";
-import { Graph } from "@antv/x6";
+import { Graph, Platform } from "@antv/x6";
 import NodeBar from "./components/NodeBar";
 import registerNode from "./shape/registerNode";
 import registerEdge from "./edge/registerEdge";
@@ -66,6 +66,79 @@ export default {
             },
           ],
           visible: true, // 渲染网格背景
+        },
+        // 节点连接
+        connecting: {
+          anchor: "center",
+          snap: true,
+          connector: "algo-edge",
+          allowBlank: false,
+          allowMulti: false,
+          allowLoop: false,
+          allowNode: false,
+          allowEdge: false,
+          allowPort: true,
+          highlight: true,
+          sourceAnchor: {
+            name: "bottom",
+            args: {
+              dx: Platform.IS_SAFARI ? 5 : 0,
+            },
+          },
+          targetAnchor: {
+            name: "center",
+            args: {
+              dx: Platform.IS_SAFARI ? 5 : 0,
+            },
+          },
+          connectionPoint: "anchor",
+          createEdge() {
+            return that.graph.createEdge({
+              attrs: {
+                line: {
+                  strokeDasharray: "5 5",
+                  stroke: "#808080",
+                  strokeWidth: 1,
+                  targetMarker: {
+                    name: "block",
+                    args: {
+                      size: "6",
+                    },
+                  },
+                },
+              },
+            });
+          },
+          validateMagnet({ magnet }) {
+            return magnet.getAttribute("port-group") !== "in";
+          },
+          validateConnection({ targetView, sourceMagnet, targetMagnet }) {
+            // 只能从输出链接桩创建连接
+            if (
+              !sourceMagnet ||
+              sourceMagnet.getAttribute("port-group") === "in"
+            ) {
+              return false;
+            }
+
+            // 只能连接到输入链接桩
+            if (
+              !targetMagnet ||
+              targetMagnet.getAttribute("port-group") !== "in"
+            ) {
+              return false;
+            }
+
+            // 判断目标链接桩是否可连接
+            const portId = targetMagnet.getAttribute("port");
+            const node = targetView.cell;
+            const port = node.getPort(portId);
+            if (port && port.connected) {
+              return false;
+            }
+
+            return true;
+          },
         },
       });
       // 移入节点效果
