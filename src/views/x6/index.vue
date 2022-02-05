@@ -19,6 +19,7 @@ import NodeBar from "./components/NodeBar";
 import registerNode from "./shape/registerNode";
 import registerEdge from "./edge/registerEdge";
 import cellHover from "./composables/cellHover";
+import cellEvent from "./composables/cellEvent";
 registerNode(Graph); // 调用注册自定义节点方法
 registerEdge(Graph); // 调用注册边方法
 export default {
@@ -143,6 +144,8 @@ export default {
       });
       // 移入节点效果
       cellHover(this.graph);
+      // 引入一些事件
+      cellEvent(this.graph);
     },
   },
 };
