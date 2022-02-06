@@ -5,6 +5,7 @@
       <node-bar></node-bar>
       <!-- 中部内容区 -->
       <div class="content-wrapper">
+        <toolbar></toolbar>
         <div class="draw-wrapper" id="drag-container"></div>
       </div>
       <!-- 右侧节点配置区 -->
@@ -16,6 +17,7 @@
 import "@antv/x6-vue-shape";
 import { Graph, Platform } from "@antv/x6";
 import NodeBar from "./components/NodeBar";
+import Toolbar from "./components/Toolbar";
 import registerNode from "./shape/registerNode";
 import registerEdge from "./edge/registerEdge";
 import cellHover from "./composables/cellHover";
@@ -26,6 +28,7 @@ export default {
   name: "X6",
   components: {
     NodeBar,
+    Toolbar,
   },
   data() {
     return {
@@ -141,6 +144,7 @@ export default {
             return true;
           },
         },
+        history: true,
       });
       // 移入节点效果
       cellHover(this.graph);
@@ -163,9 +167,9 @@ export default {
     display: flex;
     .content-wrapper {
       height: 100%;
-      width: 100%;
+      flex: 1;
       .draw-wrapper {
-        height: 100%;
+        height: calc((100% - 42px));
       }
     }
   }
