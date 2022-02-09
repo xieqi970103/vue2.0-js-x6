@@ -2,7 +2,7 @@
  * @Description: 事件
  * @Author: xxqq
  * @Date: 2022-02-05 20:23:45
- * @LastEditTime: 2022-02-05 20:59:29
+ * @LastEditTime: 2022-02-09 21:21:13
  * @LastEditors: xxqq
  */
 const changeNode = (node, visible) => {
@@ -23,7 +23,6 @@ export default (graph) => {
     const edge = args.edge;
     const node = args.currentCell;
     const elem = args.currentMagnet;
-    console.log(elem);
     const portId = elem.getAttribute("port");
     // 触发 port 重新渲染
     node && node.setPortProp(portId, "connected", true);
@@ -34,5 +33,26 @@ export default (graph) => {
         strokeDasharray: "",
       },
     });
+  });
+  /**
+   * 节点事件
+   */
+  graph.on("node:changed", ({ node }) => {
+    changeNode(node, false);
+  });
+  /**
+   * 键盘快捷键
+   */
+  // 重做
+  graph.bindKey("ctrl+y", () => {
+    if (graph.history.canRedo()) {
+      graph.history.redo();
+    }
+  });
+  // 撤销
+  graph.bindKey("ctrl+z", () => {
+    if (graph.history.canUndo()) {
+      graph.history.undo();
+    }
   });
 };

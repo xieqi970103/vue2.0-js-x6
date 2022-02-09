@@ -144,7 +144,11 @@ export default {
             return true;
           },
         },
-        history: true,
+        history: true, //开启画布撤销/重做能力。
+        // 开启键盘事件
+        keyboard: {
+          enabled: true,
+        },
       });
       // 移入节点效果
       cellHover(this.graph);
@@ -161,6 +165,7 @@ export default {
     height: 95vh;
   }
 }
+// 对样式做了一些调整
 .panel {
   .panel-content-wrapper {
     height: 100%;
